@@ -6,7 +6,16 @@
   <script type="text/javascript">
     let parts = document.location.href.split('/').splice(-2); 
     if (parts[0] == 'y') {
-      document.location.href = `https://youtu.be/${parts[1]}`;
+      let videoId = parts[1];
+      let videoUrl = `https://youtu.be/${videoId}`;
+      if( /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
+        document.location.href = `vnd.youtube://${videoId}`;
+        window.setTimeout(function() {
+          document.location.href = mobileFallback;
+        }, 25);
+      } else {
+        document.location.href = videoUrl;
+      }
     }
   </script>
 </html>
