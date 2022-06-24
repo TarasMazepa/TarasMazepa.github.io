@@ -21,10 +21,10 @@
         let newUrl = `www.youtube.com${fullPath.substring(index)}`;
         return {'mobile':`vnd.youtube://${newUrl}`, 'desktop':`https://${newUrl}`};
       }
-      return null;
+      let channelUrl = 'www.youtube.com/channel/UCTdopFaSw1g5dA-Ak-2a76w';
+      return {'mobile':`vnd.youtube://${channelUrl}`, 'desktop':`https://${channelUrl}`};
     }
     let urls = makeUrls();
-    if (urls == null);
     if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {      
       document.location.href = urls.mobile;
       window.setTimeout(function() {
