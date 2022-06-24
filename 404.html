@@ -4,18 +4,32 @@
   <body>
   </body>
   <script type="text/javascript">
-    let parts = document.location.href.split('/').splice(-2); 
-    if (parts[0] == 'w') {
-      let videoId = parts[1];
-      let videoUrl = `https://youtu.be/${videoId}`;
-      if( /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-        document.location.href = `vnd.youtube://${videoId}`;
-        window.setTimeout(function() {
-          document.location.replace(videoUrl);
-        }, 25);
-      } else {
-        document.location.href = videoUrl;
+    function makeUrls () {
+      let url = new URL(document.location.href);
+      let pathIndex = url.href.indexOf(url.path);
+      let fullPath = url.href.substring(pathIndex);
+      let command = '';
+      let index = fullPath.indexOf('/', 1);
+      if (index != -1) {
+        command = fullPath.substring(1, index);
       }
+      if (command == 'w') {
+        let videoId = fullPath.substring(index + 1);
+        return {'mobile':`vnd.youtube://${videoId}`, 'desktop':`https://youtu.be/${videoId}`};
+      }
+      if (command == 'r') {
+        let newUrl = `www.youtube.com${fullPath.substring(index)}`;
+        return {'mobile':`vnd.youtube://${newUrl}`, 'desktop':`https://${newUrl}`};
+      }
+    }
+    let urls = makeUrls();
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {      
+      document.location.href = urls.mobile;
+      window.setTimeout(function() {
+        document.location.replace(urls.desktop);
+      }, 25);
+    } else {
+      document.location.replace(urls.desktop);
     }
   </script>
 </html>
