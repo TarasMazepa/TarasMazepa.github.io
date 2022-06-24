@@ -15,7 +15,7 @@
       }
       if (command == 'w') {
         let videoId = fullPath.substring(index + 1);
-        return {'mobile':`vnd.youtube://${videoId}`, 'desktop':`https://youtu.be/${videoId}`};
+        return {'mobile':`vnd.youtube://${videoId}`, 'desktop':`https://www.youtube.com/watch?v=${videoId}`};
       }
       if (command == 'r') {
         let newUrl = `www.youtube.com${fullPath.substring(index)}`;
