@@ -4,6 +4,9 @@
   <body id="body">
   </body>
   <script type="text/javascript">
-    document.getElementById('body').text = document.referrer;
+    let parts = document.location.href.split('/').splice(-2); 
+    if (parts[0] == 'y') {
+      document.location.href = `https://youtu.be/${parts[1]}`;
+    }
   </script>
 </html>
