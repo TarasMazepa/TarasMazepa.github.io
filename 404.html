@@ -6,7 +6,7 @@
   <script type="text/javascript">
     function makeUrls () {
       let url = new URL(document.location.href);
-      let pathIndex = url.href.indexOf(url.path);
+      let pathIndex = url.href.indexOf(url.pathname);
       let fullPath = url.href.substring(pathIndex);
       let command = '';
       let index = fullPath.indexOf('/', 1);
@@ -21,8 +21,10 @@
         let newUrl = `www.youtube.com${fullPath.substring(index)}`;
         return {'mobile':`vnd.youtube://${newUrl}`, 'desktop':`https://${newUrl}`};
       }
+      return null;
     }
     let urls = makeUrls();
+    if (urls == null);
     if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {      
       document.location.href = urls.mobile;
       window.setTimeout(function() {
