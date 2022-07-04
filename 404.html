@@ -1,37 +1,37 @@
 <html>
-  <head>
-  </head>
-  <body>
-  </body>
-  <script type="text/javascript">
-    function makeUrls () {
-      let url = new URL(document.location.href);
-      let pathIndex = url.href.indexOf(url.pathname);
-      let fullPath = url.href.substring(pathIndex);
-      let command = '';
-      let index = fullPath.indexOf('/', 1);
-      if (index != -1) {
-        command = fullPath.substring(1, index);
+   <head>
+   </head>
+   <body>
+   </body>
+   <script type="text/javascript">
+      function makeUrls () {
+        let url = new URL(document.location.href);
+        let pathIndex = url.href.indexOf(url.pathname);
+        let fullPath = url.href.substring(pathIndex);
+        let command = '';
+        let index = fullPath.indexOf('/', 1);
+        if (index != -1) {
+          command = fullPath.substring(1, index);
+        }
+        if (command == 'w') {
+          let videoId = fullPath.substring(index + 1);
+          return {'mobile':`vnd.youtube://${videoId}`, 'desktop':`https://www.youtube.com/watch?v=${videoId}`};
+        }
+        if (command == 'r') {
+          let newUrl = `www.youtube.com${fullPath.substring(index)}`;
+          return {'mobile':`vnd.youtube://${newUrl}`, 'desktop':`https://${newUrl}`};
+        }
+        let channelUrl = 'www.youtube.com/channel/UCTdopFaSw1g5dA-Ak-2a76w';
+        return {'mobile':`vnd.youtube://${channelUrl}`, 'desktop':`https://${channelUrl}`};
       }
-      if (command == 'w') {
-        let videoId = fullPath.substring(index + 1);
-        return {'mobile':`vnd.youtube://${videoId}`, 'desktop':`https://www.youtube.com/watch?v=${videoId}`};
-      }
-      if (command == 'r') {
-        let newUrl = `www.youtube.com${fullPath.substring(index)}`;
-        return {'mobile':`vnd.youtube://${newUrl}`, 'desktop':`https://${newUrl}`};
-      }
-      let channelUrl = 'www.youtube.com/channel/UCTdopFaSw1g5dA-Ak-2a76w';
-      return {'mobile':`vnd.youtube://${channelUrl}`, 'desktop':`https://${channelUrl}`};
-    }
-    let urls = makeUrls();
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {      
-      document.location.href = urls.mobile;
-      window.setTimeout(function() {
+      let urls = makeUrls();
+      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {      
+        document.location.href = urls.mobile;
+        window.setTimeout(function() {
+          document.location.replace(urls.desktop);
+        }, 25);
+      } else {
         document.location.replace(urls.desktop);
-      }, 25);
-    } else {
-      document.location.replace(urls.desktop);
-    }
-  </script>
+      }
+   </script>
 </html>
